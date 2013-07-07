@@ -1,0 +1,119 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.prime.com.tr/ui">
+ 
+<f:view>
+    <h:head>
+        <title>Locadora</title>
+         
+        <style type="text/css">
+            .ui-widget {font-size: 75% !important;}
+        </style>
+    </h:head>
+ 
+    <h:body>
+    <h:form id="frmGeral">
+        <p:fieldset legend="Controle da locadora" toggleable="true">
+            <p:messages id="messages" />
+         
+            <h:panelGrid columns="2" style="font-family: Verdana, Arial; font-weight: bold;">
+                <h:outputLabel id="lbTitulo" value="*Titulo:" for="titulo" style="float: right;"/>
+                <p:inputText id="titulo" size="60" value="#{dvdBean.dvd.titulo}" required="true"
+                                requiredMessage="Campo [Titulo] é obrigatório." />
+                         
+                <h:outputLabel id="lbPreco" value="*Preço:" for="preco" style="float: right;"/>
+                <p:inputText id="preco" size="4" value="#{dvdBean.dvd.preco}" required="true"
+                                requiredMessage="Campo [Preço] é obrigatório."
+                                validatorMessage="Campo [Preço] possui erros. Verifique.">
+                    <f:validateDoubleRange minimum="1"/>          
+                </p:inputText>
+                                 
+                <h:outputLabel id="lbAno" value="*Ano:" for="ano" style="float: right;"/>
+                <p:inputText id="ano" size="4" value="#{dvdBean.dvd.ano}" required="true"
+                                requiredMessage="Campo [Ano] é obrigatório."
+                                validatorMessage="Campo [Ano] possui erros. Verifique.">
+                    <f:validateLongRange minimum="1900" maximum="2012"/>              
+                </p:inputText>
+                                 
+                <h:outputLabel id="lbFaixa" value="*Faixa etária:" for="faixa" style="float: right;"/>
+                <p:inputText id="faixa" size="2" value="#{dvdBean.dvd.faixa_etaria}" required="true"
+                                requiredMessage="Campo [Faixa etária] é obrigatório."
+                                validatorMessage="Campo [Faixa etária] possui erros. Verifique.">
+                    <f:validateLongRange minimum="5"/>                
+                </p:inputText>
+                                 
+                <h:outputLabel id="lbGenero" value="*Genero: " for="genero" style="float: right;"/>           
+                <h:selectOneMenu id="genero" value="#{dvdBean.generoID}"  required="true"
+                                requiredMessage="Campo [Genero] é obrigatório.">
+                    <f:selectItem itemLabel="Escolha ..." itemValue=""/>
+                    <f:selectItems value="#{generoBean.generos}" var="gen"
+                                itemLabel="#{gen.nome}" itemValue="#{gen.id}"/>
+                </h:selectOneMenu>
+                                         
+                <p:commandButton value="Adicionar DVD" action="#{dvdBean.save()}"
+                            update="frmGeral, messages, dtDVDs" />
+            </h:panelGrid>
+ 
+                <p:spacer height="10"/>
+                 
+            <p:dataTable id="dtDVDs" emptyMessage="Nenhum registro encontrado." value="#{dvdBean.dvds}" var="d"
+                                style="text-align: center; font-weight: bold;">
+                <f:facet name="header">
+                    <h:outputText value="Registro de DVDs" />
+                </f:facet>
+                     
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Título"/>
+                    </f:facet>
+                    <h:outputText value="#{d.titulo}"/>
+                </p:column>   
+                 
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Preço"/>
+                    </f:facet>
+                    <h:outputText value="#{d.preco}"/>
+                </p:column>
+                     
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Ano"/>
+                    </f:facet>
+                    <h:outputText value="#{d.ano}"/>
+                </p:column>
+                     
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Faixa etária"/>
+                    </f:facet>
+                    <h:outputText value="#{d.faixa_etaria}"/>
+                </p:column>
+ 
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Genero"/>
+                    </f:facet>
+                    <h:outputText value="#{d.genero.nome}"/>
+                </p:column>
+                 
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Remover"/>
+                    </f:facet>
+                    <f:ajax event="click" render="@form" listener="#{dvdBean.remove(d)}">
+                        <h:commandLink value="Remover" />
+                    </f:ajax>
+                </p:column>
+                     
+                <f:facet name="footer">
+                    <h:outputText value="Há um total de #{dvdBean.count} DVD(s) cadastrado(s) no sistema."/>
+                </f:facet>
+                </p:dataTable>
+        </p:fieldset>
+    </h:form>
+    </h:body>
+</f:view>
+</html>
