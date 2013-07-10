@@ -27,15 +27,10 @@ public class Funcionario {
 	@Column(name="funcionario_ENTRADA")
 	private Calendar entrada = Calendar.getInstance();
 	
-	@Column(name="funcionario_ATUALIZAO")
-	private Calendar atualizao = Calendar.getInstance();
-
+	
+	// GETTERS AND SETTERS
 	public int getId() {
 		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public String getFuncionario() {
@@ -60,14 +55,6 @@ public class Funcionario {
 
 	public void setEntrada(Calendar entrada) {
 		this.entrada = entrada;
-	}
-
-	public Calendar getAtualizao() {
-		return atualizao;
-	}
-
-	public void setAtualizao(Calendar atualizao) {
-		this.atualizao = atualizao;
 	}
 
 }
