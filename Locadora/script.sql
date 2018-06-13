@@ -20,3 +20,5 @@ CREATE TABLE `dvd` (
   KEY `FK109F2A18DB0F5` (`genero_ID`),
   CONSTRAINT `FK109F2A18DB0F5` FOREIGN KEY (`genero_ID`) REFERENCES `genero` (`genero_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+teste
